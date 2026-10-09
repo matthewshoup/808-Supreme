@@ -1,0 +1,24 @@
+name: macOS Build
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build -G Xcode -DCMAKE_OSX_ARCHITECTURES="arm64;x86_64"
+      - name: Build VST3 and Standalone
+        run: cmake --build build --config Release --target 808Supreme_VST3 808Supreme_Standalone
+      - name: Package builds
+        run: |
+          mkdir -p artifacts
+          find build -type d -name "*.vst3" -exec cp -R {} artifacts/ \;
+          find build -type d -name "808 Supreme.app" -exec cp -R {} artifacts/ \;
+      - uses: actions/upload-artifact@v4
+        with:
+          name: 808-Supreme-macOS
+          path: artifacts
