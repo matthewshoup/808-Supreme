@@ -37,7 +37,7 @@ void Supreme808AudioProcessor::processBlock(juce::AudioBuffer<float>& b,juce::Mi
     kick.setLevel(parameters.getRawParameterValue("level")->load());
     auto it=m.begin();
     for(int s=0;s<b.getNumSamples();++s) {
-        while(it!=m.end()&&it->samplePosition<=s) { auto msg=it->getMessage(); if(msg.isNoteOn()) triggerNote(msg.getNoteNumber(),msg.getFloatVelocity()); ++it; }
+        while(it!=m.end()&&(*it).samplePosition<=s) { auto msg=(*it).getMessage(); if(msg.isNoteOn()) triggerNote(msg.getNoteNumber(),msg.getFloatVelocity()); ++it; }
         float x=juce::jlimit(-1.0f,1.0f,kick.processSample()+drums.processSample());
         for(int c=0;c<b.getNumChannels();++c) b.setSample(c,s,x);
     }
