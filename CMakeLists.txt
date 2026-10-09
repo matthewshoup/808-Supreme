@@ -9,6 +9,7 @@ juce_add_plugin(808Supreme COMPANY_NAME "Matthew Shoup" BUNDLE_ID "com.matthewsh
     PLUGIN_MANUFACTURER_CODE MShp PLUGIN_CODE ES08 FORMATS VST3 Standalone PRODUCT_NAME "808 Supreme"
     IS_SYNTH TRUE NEEDS_MIDI_INPUT TRUE NEEDS_MIDI_OUTPUT FALSE IS_MIDI_EFFECT FALSE
     EDITOR_WANTS_KEYBOARD_FOCUS FALSE COPY_PLUGIN_AFTER_BUILD FALSE)
+juce_generate_juce_header(808Supreme)
 target_sources(808Supreme PRIVATE Source/PluginProcessor.cpp Source/PluginEditor.cpp Source/DSP/Kick808.cpp Source/DSP/Drum808.cpp)
 target_compile_definitions(808Supreme PUBLIC JUCE_WEB_BROWSER=0 JUCE_USE_CURL=0 JUCE_VST3_CAN_REPLACE_VST2=0)
 target_link_libraries(808Supreme PRIVATE juce::juce_audio_utils juce::juce_dsp PUBLIC
